@@ -19,67 +19,17 @@ if (sliders) {
             slider.innerHTML = '';
             slider.appendChild(slider_wrapper);
             slider.classList.add('swiper-bild');
-
-            if (slider.classList.contains('_swiper_scroll')) {
-                let sliderScroll = document.createElement('div');
-                sliderScroll.classList.add('swiper-scrollbar');
-                slider.appendChild(sliderScroll);
-            }
-        }
-        if (slider.classList.contains('_gallery')) {
-            //slider.data('lightGallery').destroy(true);
         }
     }
-    sliders_bild_callback();
 }
-
-function sliders_bild_callback(params) { }
-
-let sliderScrollItems = document.querySelectorAll('._swiper_scroll');
-if (sliderScrollItems.length > 0) {
-    for (let index = 0; index < sliderScrollItems.length; index++) {
-        const sliderScrollItem = sliderScrollItems[index];
-        const sliderScrollBar = sliderScrollItem.querySelector('.swiper-scrollbar');
-        const sliderScroll = new Swiper(sliderScrollItem, {
-            observer: true,
-            observeParents: true,
-            direction: 'vertical',
-            slidesPerView: 'auto',
-            freeMode: true,
-            scrollbar: {
-                el: sliderScrollBar,
-                draggable: true,
-                snapOnRelease: false
-            },
-            mousewheel: {
-                releaseOnEdges: true,
-            },
-        });
-        sliderScroll.scrollbar.updateSize();
-    }
-}
-
-
-function sliders_bild_callback(params) { }
 
 if (document.querySelector('.slider-summer__body')) {
     let summerSwiper = new Swiper('.slider-summer__body', {
-        /*
-        effect: 'fade',
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        */
         observer: true,
         observeParents: true,
         spaceBetween: 30,
         watchOverflow: true,
-        // autoHeight: true,
         speed: 800,
-        //touchRatio: 0,
-        // simulateTouch: false,
-        //loop: true,
         // Отключить предзагрузку всех картинок
         preloadImages: false,
         // Lazy Loading
@@ -93,11 +43,6 @@ if (document.querySelector('.slider-summer__body')) {
         watchSlidesProgress: true,
         // Добавление класса видимым слайдам
         watchSlidesVisibility: true,
-        // Dotts
-        //pagination: {
-        //	el: '.slider-quality__pagging',
-        //	clickable: true,
-        //},
         init: false,
         // Arrows
         navigation: {
@@ -122,10 +67,6 @@ if (document.querySelector('.slider-summer__body')) {
                 spaceBetween: 30,
             },
         },
-        // And if we need scrollbar
-        //scrollbar: {
-        //	el: '.swiper-scrollbar',
-        //},
         on: {
             transitionStart: function () {
                 indexSlide();
@@ -154,41 +95,20 @@ if (document.querySelector('.slider-summer__body')) {
 
 if (document.querySelector('.slider-flash__body')) {
     new Swiper('.slider-flash__body', {
-        /*
-        effect: 'fade',
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        */
         observer: true,
         observeParents: true,
         spaceBetween: 30,
         watchOverflow: true,
-        // autoHeight: true,
         speed: 800,
-        //touchRatio: 0,
-        // simulateTouch: false,
         grabCursor: true,
         loop: true,
-        // Отключить предзагрузку всех картинок
         preloadImages: false,
-        // Lazy Loading
         lazy: {
-            // Подключать на старте переключения слайда
             loadOnTransitionStart: true,
-            // Подключить предыдущую и следующие картинки
             loadPrevNext: true,
         },
-        // Слежка за видимыми слайдами
         watchSlidesProgress: true,
-        // Добавление класса видимым слайдам
         watchSlidesVisibility: true,
-        // Dotts
-        //pagination: {
-        //	el: '.slider-quality__pagging',
-        //	clickable: true,
-        //},
         breakpoints: {
             0: {
                 slidesPerView: 1.1,
@@ -269,7 +189,9 @@ function lazyScrollCheck() {
 				const webp = lazyImages[imgIndex].previousElementSibling;
 				if (webp.tagName == 'SOURCE') {
 					const dataImgSrc = lazyImages[imgIndex].getAttribute('src').split('.');
-					dataImgSrc[1] = 'webp'
+					if (dataImgSrc[1] !== 'svg') {
+						dataImgSrc[1] = 'webp'
+					}
 					const dataImgSrcWebp = dataImgSrc.join('.');
 					webp.setAttribute('srcset', dataImgSrcWebp);
 					webp.removeAttribute('data-srcset');
